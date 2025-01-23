@@ -7,7 +7,7 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
   const { projectId } = req.query;
   
   if (!projectId) {
-    res.status(400).json({ message: "Project ID is required." });
+    res.status(400).json({ message: "Project Id is required." });
     return;
   }
   
@@ -28,3 +28,28 @@ export const getTasks = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: `Error retrieving tasks: ${error}` });
   }
 };
+
+export const createTask = async (req: Request, res: Response): Promise<void> => {
+  const { title, description, status, priority, tags, startDate, dueDate, points, projectId, authorUserId, assignedUserId } = req.body;
+  
+  try {
+    const task = await prisma.task.create({
+      data: {
+        title, 
+        description, 
+        status, 
+        priority, 
+        tags, 
+        startDate, 
+        dueDate, 
+        points, 
+        projectId, 
+        authorUserId,
+        assignedUserId 
+      },
+    });
+    res.status(201).json(task);
+  } catch (error: any) {
+    res.status(500).json({ message: `Error creating task: ${error}` });
+  }
+}
