@@ -1,6 +1,6 @@
-import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import projectRoutes from "./routes/projectRoutes";
@@ -25,7 +25,7 @@ app.use("/projects", projectRoutes);
 app.use("/tasks", taskRoutes);
 
 /* SERVER */
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
 });
